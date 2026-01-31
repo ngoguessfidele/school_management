@@ -6,14 +6,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Student from '@/models/Student';
-import { auth } from '@/lib/auth';
+import { requireTeacher, requireAdmin } from '@/lib/api-auth';
 
 // GET - List all students or filter
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const authResult = await requireTeacher();
+    if (authResult instanceof NextResponse) {
+      return authResult;
     }
 
     await connectDB();
@@ -38,8 +38,8 @@ export async function GET(request: NextRequest) {
     if (status) query.status = status;
 
     // Students can only view their own data
-    if (session.user.role === 'student') {
-      const student = await Student.findOne({ userId: session.user.id });
+    if (authResult.user.role === 'student') {
+      const student = await Student.findOne({ userId: authResult.user.id });
       return NextResponse.json({ success: true, data: student ? [student] : [] });
     }
 
@@ -69,9 +69,9 @@ export async function GET(request: NextRequest) {
 // POST - Create new student
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session || session.user.role !== 'admin') {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const authResult = await requireAdmin();
+    if (authResult instanceof NextResponse) {
+      return authResult;
     }
 
     await connectDB();

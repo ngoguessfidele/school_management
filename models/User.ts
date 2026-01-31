@@ -74,17 +74,19 @@ const UserSchema = new Schema<IUser>(
 UserSchema.index({ email: 1 });
 UserSchema.index({ role: 1 });
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (this: IUser) {
   if (!this.isModified('password')) {
-    return next();
+    return;
   }
-  
+
   try {
+    console.log('Hashing password for user:', this.email);
     const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
+    console.log('Password hashed successfully');
   } catch (error) {
-    next(error as Error);
+    console.error('Error hashing password:', error);
+    throw new Error('Failed to hash password');
   }
 });
 

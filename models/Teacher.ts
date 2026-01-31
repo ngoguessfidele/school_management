@@ -46,13 +46,12 @@ TeacherSchema.index({ email: 1 });
 TeacherSchema.index({ department: 1 });
 TeacherSchema.index({ userId: 1 });
 
-TeacherSchema.pre('save', async function (next) {
+TeacherSchema.pre('save', async function (this: ITeacher) {
   if (this.isNew && !this.teacherId) {
     const year = new Date().getFullYear().toString().slice(-2);
     const count = await mongoose.models.Teacher.countDocuments();
     this.teacherId = `TCH${year}${String(count + 1).padStart(4, '0')}`;
   }
-  next();
 });
 
 const Teacher: Model<ITeacher> =

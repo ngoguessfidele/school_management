@@ -5,21 +5,30 @@
 // Login Page
 // ==========================================
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { School, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { School, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const message = searchParams.get('message');
+    if (message) {
+      setSuccessMessage(message);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,6 +71,13 @@ export default function LoginPage() {
               Sign in to Rwanda Christian University Management System
             </p>
           </div>
+
+          {successMessage && (
+            <div className="mb-6 flex items-center gap-2 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+              <CheckCircle className="h-4 w-4 flex-shrink-0" />
+              <span>{successMessage}</span>
+            </div>
+          )}
 
           {error && (
             <div className="mb-6 flex items-center gap-2 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">

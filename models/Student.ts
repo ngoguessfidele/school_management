@@ -95,13 +95,12 @@ StudentSchema.index({ department: 1 });
 StudentSchema.index({ status: 1 });
 StudentSchema.index({ userId: 1 });
 
-StudentSchema.pre('save', async function (next) {
+StudentSchema.pre('save', async function (this: IStudent) {
   if (this.isNew && !this.studentId) {
     const year = new Date().getFullYear().toString().slice(-2);
     const count = await mongoose.models.Student.countDocuments();
     this.studentId = `RCU${year}${String(count + 1).padStart(5, '0')}`;
   }
-  next();
 });
 
 const Student: Model<IStudent> =

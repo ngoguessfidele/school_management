@@ -75,6 +75,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24 hours
   },
+  baseURL: process.env.AUTH_URL,
+  trustHost: process.env.NODE_ENV !== 'production',
   secret: process.env.AUTH_SECRET,
 });
 
@@ -92,13 +94,5 @@ declare module 'next-auth' {
       role: string;
       avatar?: string;
     };
-  }
-}
-
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string;
-    role: string;
-    avatar?: string;
   }
 }

@@ -5,7 +5,7 @@
 // Dashboard Page
 // ==========================================
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import {
   School,
@@ -22,6 +22,8 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { RoleGuard, AdminOnly, StaffOnly } from '@/components/role-guard';
+import { useRoleAccess } from '@/lib/role-access';
 
 interface DashboardStats {
   totalStudents: number;
@@ -40,6 +42,7 @@ interface DashboardStats {
 
 export default function DashboardPage() {
   const { data: session } = useSession();
+  const { userRole, isAdmin, isTeacher, isStudent } = useRoleAccess();
 
   const { data: stats, isLoading } = useQuery<DashboardStats>({
     queryKey: ['dashboard-stats'],
@@ -176,9 +179,9 @@ export default function DashboardPage() {
   ];
 
   const displayCards =
-    session?.user?.role === 'student'
+    isStudent
       ? studentCards
-      : session?.user?.role === 'teacher'
+      : isTeacher
       ? [...teacherCards, ...statCards.filter((c) => c.roles.includes('teacher'))]
       : statCards.filter((c) => c.roles.includes('admin'));
 
@@ -186,18 +189,39 @@ export default function DashboardPage() {
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
-        <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/20">
-            <School className="h-8 w-8 text-yellow-400" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/20">
+              <School className="h-8 w-8 text-yellow-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold">
+                Welcome to Rwanda Christian University
+              </h1>
+              <RoleGuard roles={['admin']} fallback={
+                <RoleGuard roles={['teacher']} fallback={
+                  <p className="text-blue-100 mt-1">
+                    Hello, {session?.user?.name}! Welcome to your student dashboard.
+                  </p>
+                }>
+                  <p className="text-blue-100 mt-1">
+                    Hello, {session?.user?.name}! Welcome to your teaching dashboard.
+                  </p>
+                </RoleGuard>
+              }>
+                <p className="text-blue-100 mt-1">
+                  Hello, {session?.user?.name}! Welcome to the administration dashboard.
+                </p>
+              </RoleGuard>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold">
-              Welcome to Rwanda Christian University
-            </h1>
-            <p className="text-blue-100 mt-1">
-              Hello, {session?.user?.name}! Here&apos;s your dashboard overview.
-            </p>
-          </div>
+          <button
+            onClick={() => signOut({ callbackUrl: '/auth/login' })}
+            className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors"
+          >
+            <ArrowUpRight className="h-4 w-4" />
+            Sign Out
+          </button>
         </div>
         <div className="mt-4 flex items-center gap-2 text-sm text-blue-200">
           <Clock className="h-4 w-4" />
@@ -277,43 +301,38 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              {session?.user?.role === 'admin' && (
-                <>
-                  <Link
-                    href="/dashboard/students?action=add"
-                    className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <GraduationCap className="h-5 w-5 text-blue-600" />
-                    <span className="text-sm font-medium">Add Student</span>
-                  </Link>
-                  <Link
-                    href="/dashboard/teachers?action=add"
-                    className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <Users className="h-5 w-5 text-green-600" />
-                    <span className="text-sm font-medium">Add Teacher</span>
-                  </Link>
-                </>
-              )}
-              {(session?.user?.role === 'admin' ||
-                session?.user?.role === 'teacher') && (
-                <>
-                  <Link
-                    href="/dashboard/classes?action=add"
-                    className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <BookOpen className="h-5 w-5 text-purple-600" />
-                    <span className="text-sm font-medium">Create Class</span>
-                  </Link>
-                  <Link
-                    href="/dashboard/attendance"
-                    className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <Calendar className="h-5 w-5 text-yellow-600" />
-                    <span className="text-sm font-medium">Take Attendance</span>
-                  </Link>
-                </>
-              )}
+              <AdminOnly>
+                <Link
+                  href="/dashboard/students?action=add"
+                  className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <GraduationCap className="h-5 w-5 text-blue-600" />
+                  <span className="text-sm font-medium">Add Student</span>
+                </Link>
+                <Link
+                  href="/dashboard/teachers?action=add"
+                  className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <Users className="h-5 w-5 text-green-600" />
+                  <span className="text-sm font-medium">Add Teacher</span>
+                </Link>
+              </AdminOnly>
+              <StaffOnly>
+                <Link
+                  href="/dashboard/classes?action=add"
+                  className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <BookOpen className="h-5 w-5 text-purple-600" />
+                  <span className="text-sm font-medium">Create Class</span>
+                </Link>
+                <Link
+                  href="/dashboard/attendance"
+                  className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <Calendar className="h-5 w-5 text-yellow-600" />
+                  <span className="text-sm font-medium">Take Attendance</span>
+                </Link>
+              </StaffOnly>
               <Link
                 href="/dashboard/schedule"
                 className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors"

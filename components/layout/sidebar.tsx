@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useRoleAccess } from '@/lib/role-access';
 
 interface NavItem {
   label: string;
@@ -51,9 +52,10 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { hasRole } = useRoleAccess();
 
   const filteredNavItems = navItems.filter(
-    (item) => !item.roles || item.roles.includes(session?.user?.role || '')
+    (item) => !item.roles || hasRole(item.roles as any)
   );
 
   return (

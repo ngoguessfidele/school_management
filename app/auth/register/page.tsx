@@ -157,8 +157,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               options={[
-                { value: 'student', label: 'Student' },
-                { value: 'teacher', label: 'Teacher' },
+                { value: 'student', label: '👨‍🎓 Student' },
+                { value: 'teacher', label: '👨‍🏫 Teacher' },
+                { value: 'admin', label: '👨‍💼 Administrator' },
               ]}
             />
 
