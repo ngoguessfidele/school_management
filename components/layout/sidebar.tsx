@@ -128,7 +128,7 @@ export function Sidebar() {
           )}
         </div>
         <button
-          onClick={() => signOut({ callbackUrl: '/auth/login' })}
+          onClick={() => signOut({ callbackUrl: '/' })}
           className={cn(
             'mt-3 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-blue-100 hover:bg-white/10 hover:text-white',
             collapsed && 'justify-center'

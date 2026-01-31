@@ -216,7 +216,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <button
-            onClick={() => signOut({ callbackUrl: '/auth/login' })}
+            onClick={() => signOut({ callbackUrl: '/' })}
             className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors"
           >
             <ArrowUpRight className="h-4 w-4" />
