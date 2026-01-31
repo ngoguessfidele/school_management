@@ -1,29 +1,48 @@
+'use client';
+
 // ==========================================
 // Rwanda Christian University Management System
 // Dashboard Layout
 // ==========================================
 
-import { redirect } from 'next/navigation';
-import { auth } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Header } from '@/components/layout/header';
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (status === 'loading') return;
+    if (!session) {
+      router.push('/auth/login');
+    }
+  }, [session, status, router]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   if (!session) {
-    redirect('/auth/login');
+    return null;
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar />
+      <Sidebar
+        isOpen={isMobileSidebarOpen}
+        onClose={() => setIsMobileSidebarOpen(false)}
+      />
       <div className="lg:pl-64">
-        <Header />
+        <Header onMenuClick={() => setIsMobileSidebarOpen(true)} />
         <main className="p-4 lg:p-6">{children}</main>
       </div>
     </div>

@@ -23,10 +23,16 @@ import {
   ChevronRight,
   FileText,
   BarChart3,
+  X,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRoleAccess } from '@/lib/role-access';
+
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
 interface NavItem {
   label: string;
@@ -48,7 +54,7 @@ const navItems: NavItem[] = [
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
-export function Sidebar() {
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -59,12 +65,23 @@ export function Sidebar() {
   );
 
   return (
-    <aside
-      className={cn(
-        'fixed left-0 top-0 z-40 h-screen bg-gradient-to-b from-blue-900 to-blue-800 text-white transition-all duration-300',
-        collapsed ? 'w-20' : 'w-64'
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={onClose}
+        />
       )}
-    >
+
+      <aside
+        className={cn(
+          'fixed left-0 top-0 z-40 h-screen bg-gradient-to-b from-blue-900 to-blue-800 text-white transition-all duration-300',
+          collapsed ? 'w-20' : 'w-64',
+          'lg:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        )}
+      >
       {/* Logo Section */}
       <div className="flex h-16 items-center justify-between border-b border-blue-700 px-4">
         <Link href="/dashboard" className="flex items-center gap-3">
@@ -78,16 +95,26 @@ export function Sidebar() {
             </div>
           )}
         </Link>
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="rounded-lg p-1.5 hover:bg-white/10"
-        >
-          {collapsed ? (
-            <ChevronRight className="h-5 w-5" />
-          ) : (
-            <ChevronLeft className="h-5 w-5" />
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="rounded-lg p-1.5 hover:bg-white/10"
+          >
+            {collapsed ? (
+              <ChevronRight className="h-5 w-5" />
+            ) : (
+              <ChevronLeft className="h-5 w-5" />
+            )}
+          </button>
+          {isOpen && (
+            <button
+              onClick={onClose}
+              className="rounded-lg p-1.5 hover:bg-white/10 lg:hidden"
+            >
+              <X className="h-5 w-5" />
+            </button>
           )}
-        </button>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -139,5 +166,6 @@ export function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   );
 }
