@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
 
     // Check role-based access
     const allowedRoles = roleRoutes[pathname as keyof typeof roleRoutes];
-    if (allowedRoles && !allowedRoles.includes(session.user.role)) {
+    if (allowedRoles && session.user && !allowedRoles.includes(session.user.role)) {
       // User doesn't have permission, redirect to dashboard
       return NextResponse.redirect(new URL('/dashboard', request.url));
     }
