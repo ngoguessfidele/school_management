@@ -35,6 +35,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Modal } from '@/components/ui/modal';
 import { DEPARTMENTS } from '@/lib/utils';
 
 interface Student {
