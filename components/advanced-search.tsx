@@ -19,15 +19,17 @@ interface FilterOption {
   group?: string;
 }
 
+interface SearchField {
+  name: string;
+  label: string;
+  type: 'text' | 'select' | 'date' | 'number';
+  options?: FilterOption[];
+  placeholder?: string;
+}
+
 interface AdvancedSearchProps {
   onSearch: (filters: Record<string, any>) => void;
-  searchFields?: {
-    name: string;
-    label: string;
-    type: 'text' | 'select' | 'date' | 'number';
-    options?: FilterOption[];
-    placeholder?: string;
-  }[];
+  searchFields?: SearchField[];
   initialFilters?: Record<string, any>;
   showAdvancedToggle?: boolean;
   className?: string;
@@ -75,7 +77,7 @@ export function AdvancedSearch({
     return filters[key] || '';
   };
 
-  const renderFilterInput = (field: AdvancedSearchProps['searchFields'][0]) => {
+  const renderFilterInput = (field: SearchField) => {
     const value = getFilterValue(field.name);
 
     switch (field.type) {

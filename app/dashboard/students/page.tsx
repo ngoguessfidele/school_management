@@ -32,6 +32,7 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import { DEPARTMENTS } from '@/lib/utils';
 
 interface Student {
