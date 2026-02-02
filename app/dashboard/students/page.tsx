@@ -22,12 +22,8 @@ import {
   Mail,
   Phone,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select } from '@/components/ui/select';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Modal } from '@/components/ui/modal';
+import { AdvancedSearch } from '@/components/advanced-search';
+import { BulkOperations, useBulkSelection } from '@/components/bulk-operations';
 import {
   Table,
   TableHeader,
@@ -55,22 +51,20 @@ interface Student {
 export default function StudentsPage() {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
-  const [search, setSearch] = useState('');
-  const [department, setDepartment] = useState('');
-  const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { selectedIds, setSelectedIds, toggleSelection, clearSelection } = useBulkSelection();
+
+  const [filters, setFilters] = useState<Record<string, any>>({});
 
   const { data, isLoading } = useQuery({
-    queryKey: ['students', search, department, status, page],
+    queryKey: ['students', filters, page],
     queryFn: async () => {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: '10',
-        ...(search && { search }),
-        ...(department && { department }),
-        ...(status && { status }),
+        ...filters,
       });
       const res = await fetch(`/api/students?${params}`);
       return res.json();
@@ -105,13 +99,79 @@ export default function StudentsPage() {
     return <Badge variant={variants[status] || 'default'}>{status}</Badge>;
   };
 
+  const bulkOperations = [
+    {
+      id: 'export',
+      label: 'Export',
+      icon: Download,
+      action: async (ids: string[]) => {
+        // Implement export functionality
+        console.log('Exporting students:', ids);
+      },
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      icon: Trash2,
+      variant: 'danger' as const,
+      requiresConfirmation: true,
+      confirmationTitle: 'Delete Students',
+      confirmationMessage: 'Are you sure you want to delete the selected students? This action cannot be undone.',
+      action: async (ids: string[]) => {
+        // Implement bulk delete
+        for (const id of ids) {
+          await fetch(`/api/students/${id}`, { method: 'DELETE' });
+        }
+        queryClient.invalidateQueries({ queryKey: ['students'] });
+        clearSelection();
+      },
+    },
+  ];
+
+  const searchFields = [
+    {
+      name: 'department',
+      label: 'Department',
+      type: 'select' as const,
+      options: DEPARTMENTS.map((d) => ({ value: d, label: d })),
+    },
+    {
+      name: 'status',
+      label: 'Status',
+      type: 'select' as const,
+      options: [
+        { value: 'active', label: 'Active' },
+        { value: 'suspended', label: 'Suspended' },
+        { value: 'graduated', label: 'Graduated' },
+        { value: 'withdrawn', label: 'Withdrawn' },
+      ],
+    },
+    {
+      name: 'year',
+      label: 'Year',
+      type: 'select' as const,
+      options: [
+        { value: '1', label: 'Year 1' },
+        { value: '2', label: 'Year 2' },
+        { value: '3', label: 'Year 3' },
+        { value: '4', label: 'Year 4' },
+      ],
+    },
+    {
+      name: 'program',
+      label: 'Program',
+      type: 'text' as const,
+      placeholder: 'Enter program name',
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Students</h1>
-          <p className="text-gray-500">Manage student records and profiles</p>
+          <h1 className="text-2xl font-bold text-foreground">Students</h1>
+          <p className="text-muted-foreground">Manage student records and profiles</p>
         </div>
         {session?.user?.role === 'admin' && (
           <Link href="/dashboard/students/new">
@@ -120,43 +180,23 @@ export default function StudentsPage() {
         )}
       </div>
 
-      {/* Filters */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <Input
-                placeholder="Search students..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                leftIcon={<Search className="h-4 w-4" />}
-              />
-            </div>
-            <Select
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-              options={[
-                { value: '', label: 'All Departments' },
-                ...DEPARTMENTS.map((d) => ({ value: d, label: d })),
-              ]}
-            />
-            <Select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              options={[
-                { value: '', label: 'All Status' },
-                { value: 'active', label: 'Active' },
-                { value: 'suspended', label: 'Suspended' },
-                { value: 'graduated', label: 'Graduated' },
-                { value: 'withdrawn', label: 'Withdrawn' },
-              ]}
-            />
-          </div>
-        </CardContent>
-      </Card>
+      {/* Advanced Search */}
+      <AdvancedSearch
+        onSearch={setFilters}
+        searchFields={searchFields}
+        initialFilters={filters}
+      />
 
       {/* Students Table */}
       <Card>
+        <BulkOperations
+          items={data?.data || []}
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          getItemId={(student: Student) => student._id}
+          operations={bulkOperations}
+        />
+
         <CardContent className="p-0">
           {isLoading ? (
             <div className="p-8 text-center">
@@ -172,6 +212,20 @@ export default function StudentsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.length === data?.data?.length && data?.data?.length > 0}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedIds(data?.data?.map((s: Student) => s._id) || []);
+                        } else {
+                          setSelectedIds([]);
+                        }
+                      }}
+                      className="rounded border-border"
+                    />
+                  </TableHead>
                   <TableHead>Student</TableHead>
                   <TableHead>Student ID</TableHead>
                   <TableHead>Department</TableHead>
@@ -183,6 +237,14 @@ export default function StudentsPage() {
               <TableBody>
                 {data?.data?.map((student: Student) => (
                   <TableRow key={student._id}>
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(student._id)}
+                        onChange={() => toggleSelection(student._id)}
+                        className="rounded border-border"
+                      />
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">

@@ -31,11 +31,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const variants = {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
-      outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500',
+      primary: 'bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary',
+      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 focus:ring-secondary',
+      outline: 'border border-border bg-background text-foreground hover:bg-muted focus:ring-primary',
       danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-      ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
+      ghost: 'text-foreground hover:bg-muted focus:ring-muted-foreground',
     };
 
     const sizes = {

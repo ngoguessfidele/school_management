@@ -23,7 +23,7 @@ export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn('bg-gray-50', className)} {...props} />
+  <thead ref={ref} className={cn('bg-muted', className)} {...props} />
 ));
 TableHeader.displayName = 'TableHeader';
 
@@ -40,7 +40,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTable
     <tr
       ref={ref}
       className={cn(
-        'border-b border-gray-200 transition-colors hover:bg-gray-50/50',
+        'border-b border-border transition-colors hover:bg-muted/50',
         className
       )}
       {...props}
@@ -54,7 +54,7 @@ export const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLT
     <th
       ref={ref}
       className={cn(
-        'h-12 px-4 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0',
+        'h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}

@@ -47,24 +47,24 @@ export function Modal({
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
           className={cn(
-            'relative w-full rounded-xl bg-white shadow-xl',
+            'relative w-full rounded-xl bg-card shadow-xl',
             sizes[size]
           )}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b px-6 py-4">
+          <div className="flex items-center justify-between border-b border-border px-6 py-4">
             <div>
               {title && (
-                <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+                <h2 className="text-lg font-semibold text-foreground">{title}</h2>
               )}
               {description && (
-                <p className="mt-1 text-sm text-gray-500">{description}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{description}</p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              className="rounded-lg p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <X className="h-5 w-5" />
             </button>

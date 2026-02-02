@@ -10,6 +10,25 @@
   --primary-dark: #1e3a8a;
   --secondary: #f59e0b;
   --accent: #3b82f6;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-dark: #1e40af;
+  --secondary: #f59e0b;
+  --accent: #60a5fa;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --border: #334155;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
 }
 
 @theme inline {
@@ -34,16 +53,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--muted);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--muted-foreground);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--foreground);
 }
 
 /* Custom Animations */
