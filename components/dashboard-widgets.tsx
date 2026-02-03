@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Dashboard Widgets
 // ==========================================
 
@@ -372,7 +372,7 @@ export function WelcomeWidget() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">
-              Rwanda Christian University
+              Rwanda Technology Institute
             </h2>
             <p className="text-primary-foreground/80 mt-1">
               {getWelcomeMessage()}

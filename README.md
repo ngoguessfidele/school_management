@@ -1,4 +1,4 @@
-# Rwanda Christian University Management System
+# Rwanda Technology Institute Management System
 
 A comprehensive university management system built with Next.js 14, featuring role-based access control for administrators, teachers, and students.
 
@@ -125,7 +125,7 @@ A comprehensive university management system built with Next.js 14, featuring ro
 
 ## 📄 License
 
-This project is private and proprietary to Rwanda Christian University.
+This project is private and proprietary to Rwanda Technology Institute.
 
 ## 🤝 Contributing
 

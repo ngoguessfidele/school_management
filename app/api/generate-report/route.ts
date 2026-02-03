@@ -1,5 +1,5 @@
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // PDF Report Generation API Route
 // ==========================================
 
@@ -49,14 +49,14 @@ export async function GET(request: NextRequest) {
     const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
     // Colors
-    const primaryColor = rgb(0.12, 0.25, 0.68); // Rwanda Christian University blue
+    const primaryColor = rgb(0.12, 0.25, 0.68); // Rwanda Technology Institute blue
     const textColor = rgb(0.1, 0.1, 0.1);
     const grayColor = rgb(0.5, 0.5, 0.5);
 
     let yPosition = height - 50;
 
     // Header - University Name
-    page.drawText('RWANDA CHRISTIAN UNIVERSITY', {
+    page.drawText('RWANDA TECHNOLOGY INSTITUTE', {
       x: 50,
       y: yPosition,
       size: 20,
@@ -209,7 +209,7 @@ export async function GET(request: NextRequest) {
     page.drawText(`GPA: ${gpa}/4.0`, { x: 350, y: yPosition, size: 10, font: helveticaBold, color: primaryColor });
 
     // Footer
-    page.drawText('This is an official document of Rwanda Christian University', {
+    page.drawText('This is an official document of Rwanda Technology Institute', {
       x: 50,
       y: 50,
       size: 8,

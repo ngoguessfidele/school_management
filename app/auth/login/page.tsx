@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Login Page
 // ==========================================
 
@@ -68,7 +68,7 @@ function LoginForm() {
             </Link>
             <h1 className="text-2xl font-bold text-gray-900">Welcome Back</h1>
             <p className="text-gray-600 mt-2">
-              Sign in to Rwanda Christian University Management System
+              Sign in to Rwanda Technology Institute Management System
             </p>
           </div>
 
@@ -157,10 +157,10 @@ function LoginForm() {
       <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-12">
         <div className="max-w-md text-center text-white">
           <School className="h-20 w-20 mx-auto mb-6 text-yellow-400" />
-          <h2 className="text-3xl font-bold mb-4">Rwanda Christian University</h2>
+          <h2 className="text-3xl font-bold mb-4">Rwanda Technology Institute</h2>
           <p className="text-xl text-blue-100 mb-2">Management System</p>
           <p className="text-blue-200">
-            Building Leaders for Christian Service
+            Empowering Technology Leaders
           </p>
           <div className="mt-12 p-6 bg-white/10 rounded-xl backdrop-blur-sm">
             <p className="text-sm text-blue-100">

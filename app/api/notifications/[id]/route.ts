@@ -1,5 +1,5 @@
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Mark Notification as Read API
 // ==========================================
 

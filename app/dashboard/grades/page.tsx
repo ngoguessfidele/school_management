@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Grades / Gradebook Page
 // ==========================================
 

@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Advanced Search and Filter Component
 // ==========================================
 

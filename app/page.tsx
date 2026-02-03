@@ -1,5 +1,5 @@
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Landing Page
 // ==========================================
 
@@ -61,7 +61,7 @@ export default function HomePage() {
                 <School className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
-                <span className="font-bold text-foreground">Rwanda Christian University</span>
+                <span className="font-bold text-foreground">Rwanda Technology Institute</span>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -88,7 +88,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm text-primary mb-6">
             <School className="h-4 w-4" />
-            <span>Rwanda Christian University Management System</span>
+            <span>Rwanda Technology Institute Management System</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
@@ -98,7 +98,7 @@ export default function HomePage() {
 
           <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-10">
             A comprehensive management system designed to streamline academic operations,
-            enhance student success, and empower educators at Rwanda Christian University.
+            enhance student success, and empower educators at Rwanda Technology Institute.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -181,7 +181,7 @@ export default function HomePage() {
             <div className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-8 text-primary-foreground">
               <div className="text-center">
                 <School className="h-16 w-16 mx-auto mb-4 text-yellow-400" />
-                <h3 className="text-2xl font-bold mb-2">Rwanda Christian University</h3>
+                <h3 className="text-2xl font-bold mb-2">Rwanda Technology Institute</h3>
                 <p className="text-primary-foreground/80 mb-6">
                   Empowering education through technology
                 </p>
@@ -214,12 +214,12 @@ export default function HomePage() {
                 <School className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <span className="font-bold text-foreground">Rwanda Christian University</span>
+                <span className="font-bold text-foreground">Rwanda Technology Institute</span>
                 <p className="text-sm text-muted-foreground">Management System</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Rwanda Christian University. All rights reserved.
+              © {new Date().getFullYear()} Rwanda Technology Institute. All rights reserved.
             </p>
           </div>
         </div>

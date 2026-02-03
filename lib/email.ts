@@ -1,5 +1,5 @@
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Email Service with Nodemailer
 // ==========================================
 
@@ -24,7 +24,7 @@ interface EmailOptions {
 
 export async function sendEmail(options: EmailOptions): Promise<void> {
   const mailOptions = {
-    from: `"Rwanda Christian University" <${process.env.SMTP_USER}>`,
+    from: `"Rwanda Technology Institute" <${process.env.SMTP_USER}>`,
     to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
     subject: options.subject,
     html: options.html,
@@ -50,17 +50,17 @@ export function generateWelcomeEmail(name: string, role: string): string {
     <body>
       <div class="container">
         <div class="header">
-          <h1>Rwanda Christian University</h1>
+          <h1>Rwanda Technology Institute</h1>
           <p>Management System</p>
         </div>
         <div class="content">
           <h2>Welcome, ${name}!</h2>
           <p>Your account has been successfully created as a <strong>${role}</strong>.</p>
-          <p>You can now log in to the Rwanda Christian University Management System to access your dashboard and features.</p>
+          <p>You can now log in to the Rwanda Technology Institute Management System to access your dashboard and features.</p>
           <p>If you have any questions, please contact the administration office.</p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Rwanda Christian University. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Rwanda Technology Institute. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -89,7 +89,7 @@ export function generateNotificationEmail(
     <body>
       <div class="container">
         <div class="header">
-          <h1>Rwanda Christian University</h1>
+          <h1>Rwanda Technology Institute</h1>
         </div>
         <div class="content">
           <p>Dear ${recipientName},</p>
@@ -100,7 +100,7 @@ export function generateNotificationEmail(
           <p>Log in to your account for more details.</p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Rwanda Christian University. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Rwanda Technology Institute. All rights reserved.</p>
         </div>
       </div>
     </body>

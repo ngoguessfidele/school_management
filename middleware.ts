@@ -1,5 +1,5 @@
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Middleware for Route Protection and Role-Based Access Control
 // ==========================================
 

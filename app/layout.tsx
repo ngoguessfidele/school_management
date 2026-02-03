@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rwanda Christian University - Management System",
-  description: "Comprehensive university management system for Rwanda Christian University. Manage students, teachers, classes, grades, attendance, and more.",
-  keywords: ["Rwanda Christian University", "university management", "student portal", "education"],
+  title: "Rwanda Technology Institute - Management System",
+  description: "Comprehensive university management system for Rwanda Technology Institute. Manage students, teachers, classes, grades, attendance, and more.",
+  keywords: ["Rwanda Technology Institute", "university management", "student portal", "education"],
 };
 
 export default function RootLayout({

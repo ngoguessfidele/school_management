@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Registration Page
 // ==========================================
 
@@ -76,10 +76,10 @@ export default function RegisterPage() {
       <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-12">
         <div className="max-w-md text-center text-white">
           <School className="h-20 w-20 mx-auto mb-6 text-yellow-400" />
-          <h2 className="text-3xl font-bold mb-4">Rwanda Christian University</h2>
+          <h2 className="text-3xl font-bold mb-4">Rwanda Technology Institute</h2>
           <p className="text-xl text-blue-100 mb-2">Management System</p>
           <p className="text-blue-200">
-            Building Leaders for Christian Service
+            Empowering Technology Leaders
           </p>
           <div className="mt-12 space-y-4">
             <div className="flex items-center gap-3 text-left bg-white/10 rounded-lg p-4">
@@ -109,7 +109,7 @@ export default function RegisterPage() {
             </Link>
             <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
             <p className="text-gray-600 mt-2">
-              Join Rwanda Christian University Management System
+              Join Rwanda Technology Institute Management System
             </p>
           </div>
 

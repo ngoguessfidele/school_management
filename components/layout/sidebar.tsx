@@ -1,7 +1,7 @@
 'use client';
 
 // ==========================================
-// Rwanda Christian University Management System
+// Rwanda Technology Institute Management System
 // Navigation Sidebar Component
 // ==========================================
 
@@ -90,8 +90,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-sm font-bold leading-tight">Rwanda Christian</span>
-              <span className="text-xs text-blue-200">University</span>
+              <span className="text-sm font-bold leading-tight">Rwanda Technology</span>
+              <span className="text-xs text-blue-200">Institute</span>
             </div>
           )}
         </Link>
