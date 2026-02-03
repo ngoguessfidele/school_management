@@ -93,7 +93,7 @@ export default function HomePage() {
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Building Leaders for
-            <span className="block gradient-text">Christian Service</span>
+            <span className="block gradient-text">the Future of Technology</span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-10">
